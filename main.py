@@ -20,6 +20,7 @@ async def on_message(message):
 
     if msg.startswith('$play'):
         channel = message.channel
+        non_split_author = message.author
         author = str(message.author).split('#')[0]
 
 
@@ -27,7 +28,7 @@ async def on_message(message):
             """
             Checks if the wait_for is correct
             """
-            return m.content in possibilities and m.author == author and m.channel == channel
+            return m.content in possibilities and m.author == non_split_author and m.channel == channel
 
         response = await client.wait_for('message', check=check)
         bot_response = random.choice(possibilities)
@@ -46,8 +47,8 @@ async def on_message(message):
             await channel.send('bot:{0}, {1}:{2}, I WON'.format(bot_response, author, response.content))
         if bot_response == response.content:
             await channel.send('bot:{0}, {1}:{2}, DRAWWW MY!'.format(bot_response, author, response.content))
-        else:
-            await channel.send('bot:{0}, {1}:{2}, DAAMN THERE IS A PROBLEM'.format(bot_response, author, response.content))
+        '''else:
+            await channel.send('bot:{0}, {1}:{2}, DAAMN THERE IS A PROBLEM'.format(bot_response, author, response.content))'''
         
         #await channel.send('Bot response: {}'.format(bot_response)) # response.content
 
